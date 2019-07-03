@@ -1,0 +1,26 @@
+diff --git a/node_modules/memfs/lib/process.js b/node_modules/memfs/lib/process.js
+index 5e76cbc..512cc9c 100644
+--- a/node_modules/memfs/lib/process.js
++++ b/node_modules/memfs/lib/process.js
+@@ -2,7 +2,7 @@
+ // Here we mock the global `process` variable in case we are not in Node's environment.
+ Object.defineProperty(exports, "__esModule", { value: true });
+ function createProcess(p) {
+-    if (p === void 0) { p = process; }
++    if (p === void 0) { p = typeof process !== 'undefined' && process; }
+     if (!p) {
+         try {
+             p = require('process');
+diff --git a/node_modules/memfs/lib/volume.js b/node_modules/memfs/lib/volume.js
+index 43b0867..17d075c 100644
+--- a/node_modules/memfs/lib/volume.js
++++ b/node_modules/memfs/lib/volume.js
+@@ -414,7 +414,7 @@ function validateGid(gid) {
+         throw TypeError(ERRSTR.GID);
+ }
+ // ---------------------------------------- Volume
+-var promisesWarn = !process_1.default.env.MEMFS_DONT_WARN;
++var promisesWarn = false;
+ /**
+  * `Volume` represents a file system.
+  */

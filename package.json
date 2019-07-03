@@ -1,0 +1,30 @@
+{
+  "name": "@sweet/core",
+  "version": "1.0.0",
+  "description": "Core components that define tasks.",
+  "main": "bin/core.js",
+  "scripts": {
+    "build": "./build.sh",
+    "postinstall": "patch-package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codesweets/core.git"
+  },
+  "author": "Trevor Sundberg",
+  "license": "MIT",
+  "dependencies": {
+    "@types/json-schema": "^7.0.3",
+    "@types/node": "^12.0.10",
+    "ajv": "^6.10.0",
+    "json-schema": "^0.2.3",
+    "memfs": "^2.15.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "patch-package": "^6.1.2",
+    "typescript": "^3.4.5"
+  }
+}
