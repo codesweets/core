@@ -1,8 +1,9 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Core components that define tasks.",
-  "types": "src/core.ts",
+  "main": "bin/main.js",
+  "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
     "postinstall": "patch-package"

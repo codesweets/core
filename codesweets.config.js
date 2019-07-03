@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    "./src/core.ts": {
+    "./src/main.ts": {
     }
   }
 };
