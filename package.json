@@ -1,9 +1,8 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Core components that define tasks.",
-  "main": "bin/core.js",
-  "types": "bin/core.d.ts",
+  "types": "src/core.ts",
   "scripts": {
     "build": "./build.sh",
     "postinstall": "patch-package"
@@ -28,7 +27,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "codesweets": "^1.0.6",
+    "codesweets": "^1.0.7",
     "eslint": "^5.16.0",
     "typescript": "^3.4.5"
   }
