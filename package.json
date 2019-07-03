@@ -1,6 +1,6 @@
 {
   "name": "@sweet/core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Core components that define tasks.",
   "main": "bin/core.js",
   "types": "bin/core.d.ts",
@@ -11,6 +11,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/codesweets/core.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Trevor Sundberg",
   "license": "MIT",
