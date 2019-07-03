@@ -1,6 +1,6 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Core components that define tasks.",
   "main": "bin/core.js",
   "types": "bin/core.d.ts",
@@ -22,14 +22,14 @@
     "@types/node": "^12.0.10",
     "ajv": "^6.10.0",
     "json-schema": "^0.2.3",
-    "memfs": "^2.15.4"
+    "memfs": "^2.15.4",
+    "patch-package": "^6.1.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "codesweets": "^1.0.6",
     "eslint": "^5.16.0",
-    "patch-package": "^6.1.2",
     "typescript": "^3.4.5"
   }
 }
