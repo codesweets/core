@@ -1,6 +1,6 @@
 {
   "name": "@sweet/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Core components that define tasks.",
   "main": "bin/core.js",
   "types": "bin/core.d.ts",
