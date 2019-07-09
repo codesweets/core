@@ -1,4 +1,4 @@
-import {TaskRoot} from "../src/main";
+import {TaskRoot} from "@codesweets/core";
 import assert from "assert";
 
 (async () => {
