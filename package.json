@@ -1,11 +1,12 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Core components that define tasks.",
   "keywords": [
     "codesweets-tasks"
   ],
-  "main": "bin/main.js",
+  "browser": "bin/main.js",
+  "main": "src/main.ts",
   "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
