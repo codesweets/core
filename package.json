@@ -1,11 +1,15 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Core components that define tasks.",
+  "keywords": [
+    "codesweets-tasks"
+  ],
   "main": "bin/main.js",
   "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
+    "test": "./test.sh",
     "postinstall": "patch-package"
   },
   "repository": {
@@ -18,12 +22,16 @@
   "author": "Trevor Sundberg",
   "license": "MIT",
   "dependencies": {
+    "@types/find": "^0.2.1",
     "@types/json-schema": "^7.0.3",
     "@types/node": "^12.0.10",
     "ajv": "^6.10.0",
+    "find": "^0.3.0",
+    "globby": "^10.0.0",
     "json-schema": "^0.2.3",
     "memfs": "^2.15.4",
-    "patch-package": "^6.1.2"
+    "patch-package": "^6.1.2",
+    "string-to-regexp": "^0.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.9.0",
