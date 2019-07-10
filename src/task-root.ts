@@ -19,7 +19,7 @@ export class TaskRoot extends Task {
   }
 
   public get logTask (): TaskLog {
-    return this.logger || console.log;
+    return this.logger || ((task, type, ...args) => console.log(task.meta.typename, type, args));
   }
 
   public constructor () {
