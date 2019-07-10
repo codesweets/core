@@ -6,3 +6,4 @@ mkdir -p ./node_modules/@codesweets
 ln -s "../../../" "./node_modules/@codesweets/core"
 tsc
 node ./bin/test.js
+rm -rf ./node_modules
