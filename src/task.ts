@@ -94,7 +94,7 @@ export class Task extends EventEmitter {
     this.owner = owner;
     this.ownerIndex = owner ? owner.components.length : -1;
 
-    this.log("info", `${this.meta.typename} constructed`);
+    this.log("info", "Constructed");
 
     // Perform all validation first before we do any side effects on other tasks.
     const errors = this.meta.validate(data);
@@ -213,7 +213,7 @@ export class Task extends EventEmitter {
 
   private async walk (func: string, visitor: (component: Task) => Promise<any>) {
     for (const component of this.components) {
-      this.log("info", `Begin ${component.meta.typename} ${func}`);
+      component.log("info", `Begin ${func}`);
       try {
         await visitor(component);
       } catch (err) {
@@ -223,7 +223,7 @@ export class Task extends EventEmitter {
         throw new Error("abort");
       }
       await component.walk(func, visitor);
-      this.log("info", `End ${component.meta.typename} ${func}`);
+      component.log("info", `End ${func}`);
     }
   }
 
