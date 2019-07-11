@@ -11,7 +11,8 @@
   "scripts": {
     "build": "./build.sh",
     "test": "./test.sh",
-    "postinstall": "patch-package"
+    "preinstall": "./preinstall.sh",
+    "postinstall": "./postinstall.sh"
   },
   "repository": {
     "type": "git",
