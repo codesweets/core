@@ -57,7 +57,7 @@ export class Task extends EventEmitter {
       case "path":
         return [path.resolve("/", pathOrPattern)];
       case "glob":
-        return globby.sync(pathOrPattern, {
+        return globby.sync(pathOrPattern.startsWith("/") ? `.${pathOrPattern}` : pathOrPattern, {
           absolute: true,
           cwd: "/",
           fs: {

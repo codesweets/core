@@ -14,7 +14,15 @@ import assert from "assert";
   assert.deepEqual(root.fsMatch("*1*", "glob"), ["/test1.txt"]);
   assert.deepEqual(root.fsMatch("/dir/test/*", "glob"), ["/dir/test/file.txt"]);
   assert.deepEqual(root.fsMatch("/dir/**", "glob"), ["/dir/test/file.txt"]);
+  assert.deepEqual(root.fsMatch("/*.txt", "glob"), [
+    "/test1.txt",
+    "/test2.txt"
+  ]);
   assert.deepEqual(root.fsMatch("1", "regex"), ["/test1.txt"]);
   assert.deepEqual(root.fsMatch(".*file.*", "regex"), ["/dir/test/file.txt"]);
   assert.deepEqual(root.fsMatch("/dir", "regex"), ["/dir/test/file.txt"]);
+  assert.deepEqual(root.fsMatch("^/[^\\/]*\\.txt", "regex"), [
+    "/test1.txt",
+    "/test2.txt"
+  ]);
 })();
