@@ -1,6 +1,8 @@
 import {TaskRoot} from "@codesweets/core";
 import assert from "assert";
 
+require("../../bin/main-web.js");
+
 (async () => {
   const root = new TaskRoot();
   await root.fs.promises.writeFile("/test1.txt", "hello1");

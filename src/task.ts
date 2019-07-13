@@ -1,8 +1,9 @@
+import "process";
 import {EventEmitter} from "events";
 import {TaskMeta} from "./task-meta";
 import {Volume} from "memfs";
+import fg from "fast-glob";
 import find from "find";
-import globby from "globby";
 import path from "path";
 import stringToRegExp from "string-to-regexp";
 
@@ -57,7 +58,7 @@ export class Task extends EventEmitter {
       case "path":
         return [path.resolve("/", pathOrPattern)];
       case "glob":
-        return globby.sync(pathOrPattern.startsWith("/") ? `.${pathOrPattern}` : pathOrPattern, {
+        return fg.sync(pathOrPattern.startsWith("/") ? `.${pathOrPattern}` : pathOrPattern, {
           absolute: true,
           cwd: "/",
           fs: {
