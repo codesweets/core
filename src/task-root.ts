@@ -1,32 +1,34 @@
+import * as BrowserFS from "browserfs";
 import {Task, TaskLog} from "./task";
 import {TaskMeta} from "./task-meta";
-import {Volume} from "memfs";
+import util from "util";
 
 export class TaskRoot extends Task {
   public static meta: TaskMeta = new TaskMeta({
-    construct: TaskRoot,
+    construct: TaskRoot as any,
     hidden: true,
     outputs: [Task],
     typename: "TaskRoot"
   })
 
-  private volume = new Volume();
-
   public logger: TaskLog;
-
-  public get fs () {
-    return this.volume;
-  }
 
   public get logTask (): TaskLog {
     return this.logger || ((task, type, ...args) => console.log(task.meta.typename, type, ...args));
   }
 
-  public constructor () {
+  private constructor () {
     super(null);
   }
 
-  public run () {
-    return super.run();
+  public static async create (): Promise<TaskRoot> {
+    const root = new TaskRoot();
+    const create = util.promisify(BrowserFS.FileSystem.InMemory.Create);
+    BrowserFS.initialize(await create(null));
+    return root;
+  }
+
+  public async run () {
+    await super.run();
   }
 }

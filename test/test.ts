@@ -1,29 +1,30 @@
-import {TaskRoot} from "@codesweets/core";
+/* eslint-disable no-sync */
+import {TaskRoot, Utility} from "../src/main";
 import assert from "assert";
-
-require("../../bin/main-web.js");
+import fs from "fs";
 
 (async () => {
-  const root = new TaskRoot();
-  await root.fs.promises.writeFile("/test1.txt", "hello1");
-  await root.fs.promises.writeFile("/test2.txt", "hello2");
-  await root.fs.promises.mkdir("/dir");
-  await root.fs.promises.mkdir("/dir/test/");
-  await root.fs.promises.writeFile("/dir/test/file.txt", "hello3");
+  await TaskRoot.create();
+  await fs.writeFileSync("/test1.txt", "hello1");
+  await fs.writeFileSync("/test2.txt", "hello2");
+  await fs.mkdirSync("/dir");
+  await fs.mkdirSync("/dir/test/");
+  await fs.writeFileSync("/dir/test/file.txt", "hello3");
+  assert.deepEqual(fs.readFileSync("/test1.txt", "utf8"), "hello1");
 
-  assert.deepEqual(root.fsMatch("test1.txt", "path"), ["/test1.txt"]);
-  assert.deepEqual(root.fsMatch("/test1.txt", "path"), ["/test1.txt"]);
-  assert.deepEqual(root.fsMatch("*1*", "glob"), ["/test1.txt"]);
-  assert.deepEqual(root.fsMatch("/dir/test/*", "glob"), ["/dir/test/file.txt"]);
-  assert.deepEqual(root.fsMatch("/dir/**", "glob"), ["/dir/test/file.txt"]);
-  assert.deepEqual(root.fsMatch("/*.txt", "glob"), [
+  assert.deepEqual(Utility.fsMatch("test1.txt", "path"), ["/test1.txt"]);
+  assert.deepEqual(Utility.fsMatch("/test1.txt", "path"), ["/test1.txt"]);
+  assert.deepEqual(Utility.fsMatch("*1*", "glob"), ["/test1.txt"]);
+  assert.deepEqual(Utility.fsMatch("/dir/test/*", "glob"), ["/dir/test/file.txt"]);
+  assert.deepEqual(Utility.fsMatch("/dir/**", "glob"), ["/dir/test/file.txt"]);
+  assert.deepEqual(Utility.fsMatch("/*.txt", "glob"), [
     "/test1.txt",
     "/test2.txt"
   ]);
-  assert.deepEqual(root.fsMatch("1", "regex"), ["/test1.txt"]);
-  assert.deepEqual(root.fsMatch(".*file.*", "regex"), ["/dir/test/file.txt"]);
-  assert.deepEqual(root.fsMatch("/dir", "regex"), ["/dir/test/file.txt"]);
-  assert.deepEqual(root.fsMatch("^/[^\\/]*\\.txt", "regex"), [
+  assert.deepEqual(Utility.fsMatch("1", "regex"), ["/test1.txt"]);
+  assert.deepEqual(Utility.fsMatch(".*file.*", "regex"), ["/dir/test/file.txt"]);
+  assert.deepEqual(Utility.fsMatch("/dir", "regex"), ["/dir/test/file.txt"]);
+  assert.deepEqual(Utility.fsMatch("^/[^\\/]*\\.txt", "regex"), [
     "/test1.txt",
     "/test2.txt"
   ]);

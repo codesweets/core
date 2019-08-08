@@ -1,18 +1,16 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Core components that define tasks.",
   "keywords": [
     "codesweets-tasks"
   ],
-  "browser": "bin/main-web.js",
+  "browser": "bin/main-web-imports.js",
   "main": "bin/main-node.js",
   "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
-    "test": "./test.sh",
-    "prepare": "self-import",
-    "postinstall": "patch-package"
+    "test": "./test.sh"
   },
   "repository": {
     "type": "git",
@@ -31,16 +29,13 @@
     "fast-glob": "^3.0.4",
     "find": "^0.3.0",
     "json-schema": "^0.2.3",
-    "memfs": "^2.15.4",
-    "patch-package": "^6.1.2",
     "string-to-regexp": "^0.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "codesweets": "^1.0.17",
+    "codesweets": "^1.0.26",
     "eslint": "^5.16.0",
-    "self-import": "^1.0.1",
     "typescript": "^3.4.5"
   }
 }

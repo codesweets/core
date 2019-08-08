@@ -1,11 +1,6 @@
 import "process";
 import {EventEmitter} from "events";
 import {TaskMeta} from "./task-meta";
-import {Volume} from "memfs";
-import fg from "fast-glob";
-import find from "find";
-import path from "path";
-import stringToRegExp from "string-to-regexp";
 
 type TaskRoot = import("./task-root").TaskRoot;
 
@@ -20,8 +15,6 @@ export interface TaskSaved {
 export type TaskLogType = "info" | "error";
 export type TaskLog = (task: Task, type: TaskLogType, ...args: any[]) => any;
 export type TaskLogger = (type: TaskLogType, ...args: any[]) => any;
-
-export type TaskFileMatch = "path" | "glob" | "regex"
 
 export class Task extends EventEmitter {
   public static meta: TaskMeta = new TaskMeta({
@@ -48,40 +41,6 @@ export class Task extends EventEmitter {
   public id: number = -1;
 
   private phase: "constructed" | "initialized" = "constructed";
-
-  public get fs (): InstanceType<typeof Volume> {
-    return this.root.fs;
-  }
-
-  public fsMatch (pathOrPattern: string, type: TaskFileMatch): string[] {
-    switch (type) {
-      case "path":
-        return [path.resolve("/", pathOrPattern)];
-      case "glob":
-        return fg.sync(pathOrPattern.startsWith("/") ? `.${pathOrPattern}` : pathOrPattern, {
-          absolute: true,
-          cwd: "/",
-          fs: {
-            // eslint-disable-next-line no-useless-call
-            lstat: ((...args: any[]) => this.fs.lstat.call(this.fs, ...args)) as any,
-            // eslint-disable-next-line no-useless-call,no-sync
-            lstatSync: ((...args: any[]) => this.fs.lstatSync.call(this.fs, ...args)) as any,
-            // eslint-disable-next-line no-useless-call
-            readdir: ((...args: any[]) => this.fs.readdir.call(this.fs, ...args)) as any,
-            // eslint-disable-next-line no-useless-call,no-sync
-            readdirSync: ((...args: any[]) => this.fs.readdirSync.call(this.fs, ...args)) as any,
-            // eslint-disable-next-line no-useless-call
-            stat: ((...args: any[]) => this.fs.stat.call(this.fs, ...args)) as any,
-            // eslint-disable-next-line no-useless-call,no-sync
-            statSync: ((...args: any[]) => this.fs.statSync.call(this.fs, ...args)) as any
-          }
-        });
-      case "regex":
-        // eslint-disable-next-line no-sync
-        return (find as any).use({fs: this.fs}).fileSync(stringToRegExp(pathOrPattern), "/");
-    }
-    throw new Error(`Invalid filesystem find type ${type}`);
-  }
 
   public get log (): TaskLogger {
     return (type, ...args) => this.root.logTask(this, type, ...args);
