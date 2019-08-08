@@ -5,8 +5,7 @@
   "keywords": [
     "codesweets-tasks"
   ],
-  "browser": "bin/main-web-imports.js",
-  "main": "bin/main-node.js",
+  "main": "bin/main-imports.js",
   "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
