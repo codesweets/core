@@ -24,6 +24,7 @@ export class TaskRoot extends Task {
   public static async create (): Promise<TaskRoot> {
     const root = new TaskRoot();
     BrowserFS.install(window);
+    BrowserFS.install(global);
     const create = util.promisify(BrowserFS.FileSystem.InMemory.Create);
     BrowserFS.initialize(await create(null));
     return root;
