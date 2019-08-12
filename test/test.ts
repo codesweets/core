@@ -5,11 +5,11 @@ import fs from "fs";
 
 (async () => {
   await TaskRoot.create();
-  await fs.writeFileSync("/test1.txt", "hello1");
-  await fs.writeFileSync("/test2.txt", "hello2");
-  await fs.mkdirSync("/dir");
-  await fs.mkdirSync("/dir/test/");
-  await fs.writeFileSync("/dir/test/file.txt", "hello3");
+  fs.writeFileSync("/test1.txt", "hello1");
+  fs.writeFileSync("/test2.txt", "hello2");
+  fs.mkdirSync("/dir");
+  fs.mkdirSync("/dir/test/");
+  fs.writeFileSync("/dir/test/file.txt", "hello3");
   assert.deepEqual(fs.readFileSync("/test1.txt", "utf8"), "hello1");
 
   assert.deepEqual(Utility.fsMatch("test1.txt", "path"), ["/test1.txt"]);
