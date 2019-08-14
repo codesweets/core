@@ -5,7 +5,7 @@
   "keywords": [
     "codesweets-tasks"
   ],
-  "main": "bin/main-imports.js",
+  "main": "bin/main.js",
   "types": "src/main.ts",
   "scripts": {
     "build": "./build.sh",
