@@ -28,4 +28,5 @@ import fs from "fs";
     "/test1.txt",
     "/test2.txt"
   ]);
+  console.log("Completed");
 })();
