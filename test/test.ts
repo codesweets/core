@@ -1,10 +1,12 @@
 /* eslint-disable no-sync */
-import {TaskRoot, Utility} from "../src/main";
+import {Task, TaskRoot, Utility} from "../src/main";
 import assert from "assert";
 import fs from "fs";
 
 (async () => {
-  await TaskRoot.create();
+  const root = await TaskRoot.create();
+  new Task(root);
+  await root.run();
   fs.writeFileSync("/test1.txt", "hello1");
   fs.writeFileSync("/test2.txt", "hello2");
   fs.mkdirSync("/dir");

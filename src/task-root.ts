@@ -1,7 +1,5 @@
-import * as BrowserFS from "browserfs";
 import {Task, TaskLog} from "./task";
 import {TaskMeta} from "./task-meta";
-import util from "util";
 
 export class TaskRoot extends Task {
   public static meta: TaskMeta = new TaskMeta({
