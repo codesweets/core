@@ -1,6 +1,6 @@
 {
   "name": "@codesweets/core",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Core components that define tasks.",
   "keywords": [
     "codesweets-tasks"
