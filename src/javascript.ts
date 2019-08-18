@@ -10,7 +10,12 @@ export class JavaScript extends TaskWithData<JavaScriptData> {
     construct: JavaScript,
     inputs: [],
     schema: require("ts-schema!./javascript.ts?JavaScriptData"),
-    typename: "JavaScript"
+    typename: "JavaScript",
+    uiSchema: {
+      script: {
+        "ui:widget": "textarea"
+      }
+    }
   })
 
   protected async onAllInitialized () {
