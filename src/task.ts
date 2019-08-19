@@ -88,7 +88,7 @@ export class Task extends EventEmitter {
     console.log(object);
     const meta = TaskMeta.loadedByName[object.typename || "TaskRoot"];
     // eslint-disable-next-line new-cap
-    const task = new meta.construct(owner, object.data);
+    const task = new meta.construct(owner, object[object.typename]);
     if (object.components) {
       object.components.forEach((saved) => Task.deserialize(saved, task));
     }
