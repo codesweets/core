@@ -13,7 +13,10 @@ export class JavaScript extends TaskWithData<JavaScriptData> {
     typename: "JavaScript",
     uiSchema: {
       script: {
-        "ui:widget": "textarea"
+        "ui:options": {
+          mode: "javascript"
+        },
+        "ui:widget": "code"
       }
     }
   })
