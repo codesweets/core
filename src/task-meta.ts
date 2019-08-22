@@ -42,8 +42,11 @@ export class TaskMeta extends EventEmitter {
 
   public static loadedByName: Record<string, TaskMeta> = {}
 
+  public readonly module: string;
+
   public constructor (init: TaskMetaInit) {
     super();
+    this.module = (window as any).currentModule;
     this.typename = init.typename;
     this.construct = init.construct;
     if (!init.construct) {
