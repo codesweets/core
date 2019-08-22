@@ -2,7 +2,9 @@ import Ajv from "ajv";
 import {EventEmitter} from "events";
 import {JSONSchema6} from "json-schema";
 
-const ajv = new Ajv();
+const ajv = new Ajv({
+  unknownFormats: "ignore"
+});
 
 type Task = import("./task").Task;
 type TaskData = import("./task").TaskData;
