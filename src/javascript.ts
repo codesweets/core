@@ -9,7 +9,55 @@ export class JavaScript extends TaskWithData<JavaScriptData> {
   public static meta: TaskMeta = new TaskMeta({
     construct: JavaScript,
     inputs: [],
-    schema: require("ts-schema!./javascript.ts?JavaScriptData"),
+    schema: {
+      ...require("ts-schema!./javascript.ts?JavaScriptData"),
+      additionalProperties: {
+        oneOf: [
+          {
+            properties: {
+              value: {
+                type: "string"
+              }
+            },
+            title: "String"
+          },
+          {
+            properties: {
+              value: {
+                type: "number"
+              }
+            },
+            title: "Number"
+          },
+          {
+            properties: {
+              value: {
+                type: "integer"
+              }
+            },
+            title: "Integer"
+          },
+          {
+            properties: {
+              value: {
+                type: "boolean"
+              }
+            },
+            title: "Boolean"
+          },
+          {
+            properties: {
+              value: {
+                format: "data-url",
+                type: "string"
+              }
+            },
+            title: "File"
+          }
+        ],
+        type: "object"
+      }
+    },
     typename: "JavaScript",
     uiSchema: {
       script: {
