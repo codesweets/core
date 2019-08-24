@@ -8,6 +8,7 @@ const ajv = new Ajv({
 
 type Task = import("./task").Task;
 type TaskData = import("./task").TaskData;
+export interface QualifiedName { module: string; typename: string }
 export type TaskConstructor = (new (owner: Task, data: TaskData) => Task) & { meta: TaskMeta }
 
 export interface TaskMetaInit {
@@ -21,7 +22,7 @@ export interface TaskMetaInit {
   hidden? : boolean;
 }
 
-export class TaskMeta extends EventEmitter {
+export class TaskMeta extends EventEmitter implements QualifiedName {
   public readonly typename: string;
 
   public readonly construct: TaskConstructor;
@@ -44,10 +45,15 @@ export class TaskMeta extends EventEmitter {
 
   public readonly module: string;
 
+  public static qualifierSeparator = " - ";
+
+  public readonly qualifiedName: string;
+
   public constructor (init: TaskMetaInit) {
     super();
     this.module = (window as any).currentModule;
     this.typename = init.typename;
+    this.qualifiedName = TaskMeta.toQualifiedName(this);
     this.construct = init.construct;
     if (!init.construct) {
       throw new Error("Parameter 'construct' is required and must " +
@@ -76,5 +82,17 @@ export class TaskMeta extends EventEmitter {
       TaskMeta.loadedByName[this.typename] = this;
       globals.ontaskmeta(this);
     }
+  }
+
+  public static toQualifiedName (qualifiedName: QualifiedName): string {
+    return `${qualifiedName.typename}${TaskMeta.qualifierSeparator}${qualifiedName.module}`;
+  }
+
+  public static parseQualifiedName (qualifiedName: string): QualifiedName {
+    const split = qualifiedName.split(TaskMeta.qualifierSeparator);
+    return {
+      module: split[1],
+      typename: split[0]
+    };
   }
 }

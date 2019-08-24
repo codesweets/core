@@ -1,5 +1,5 @@
 /* eslint-disable no-sync */
-import {JavaScript, Task, TaskRoot} from "../src/main";
+import {JavaScript, Task, TaskMeta, TaskRoot} from "../src/main";
 import assert from "assert";
 import fs from "fs";
 
@@ -15,5 +15,9 @@ import fs from "fs";
   assert.deepEqual(fs.readFileSync("/test1.txt", "utf8"), "hello1");
   assert.deepEqual(fs.readFileSync("/test2.txt", "utf8"), "hello2");
   assert.deepEqual(fs.readFileSync("/test3.txt", "utf8"), "hello3");
+  const parsedQn = TaskMeta.parseQualifiedName(Task.meta.qualifiedName);
+  assert.deepEqual(typeof parsedQn.module, "string");
+  assert.deepEqual(typeof parsedQn.typename, "string");
+  assert.deepEqual(TaskMeta.toQualifiedName(parsedQn), Task.meta.qualifiedName);
   console.log("Completed");
 })();
