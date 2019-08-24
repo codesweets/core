@@ -7,8 +7,8 @@ type TaskRoot = import("./task-root").TaskRoot;
 export type TaskData = Record<string, any>
 
 export interface TaskSaved {
-  typename: string;
-  data?: TaskData;
+  qualifiedName: string;
+  [qualifiedName: string]: TaskData | string;
   components?: TaskSaved[];
 }
 
@@ -84,11 +84,11 @@ export class Task extends EventEmitter {
   }
 
   public static deserialize (object: TaskSaved, owner: Task = null): Task {
-    console.log(TaskMeta.loadedByName);
+    console.log(TaskMeta.loadedByQualifiedName);
     console.log(object);
-    const meta = TaskMeta.loadedByName[object.typename || "TaskRoot"];
+    const meta = TaskMeta.loadedByQualifiedName[object.qualifiedName || "TaskRoot - @codesweets/core"];
     // eslint-disable-next-line new-cap
-    const task = new meta.construct(owner, object[object.typename]);
+    const task = new meta.construct(owner, object[object.qualifiedName] as TaskData);
     if (object.components) {
       object.components.forEach((saved) => Task.deserialize(saved, task));
     }
@@ -100,10 +100,10 @@ export class Task extends EventEmitter {
       throw Error(`Only serialize a task when constructed (task was '${this.phase}')`);
     }
     const result: TaskSaved = {
-      typename: this.meta.typename
+      qualifiedName: this.meta.qualifiedName
     };
     if (Object.values(this.rawData).length !== 0) {
-      result.data = this.rawData;
+      result[this.meta.qualifiedName] = this.rawData;
     }
     if (this.components.length !== 0) {
       result.components = this.components.map((component) => component.serialize());
@@ -124,7 +124,7 @@ export class Task extends EventEmitter {
 
   private ensure (meta: TaskMeta): void {
     if (!this.meta.outputs.find((func) => Task.isA(meta.construct, func))) {
-      throw new Error(`${meta.typename} is not an output of ${this.meta.typename}`);
+      throw new Error(`${meta.qualifiedName} is not an output of ${this.meta.qualifiedName}`);
     }
   }
 
@@ -191,12 +191,12 @@ export class Task extends EventEmitter {
     let idCounter = 0;
     await this.walk("initialize", async (component) => {
       component.id = idCounter++;
-      const {inputs, typename} = component.meta;
+      const {inputs, qualifiedName} = component.meta;
 
       for (const input of inputs) {
         const dependency = component.findAbove(input);
         if (!dependency) {
-          throw new Error(`Missing dependency ${input.meta.typename} in task ${typename}`);
+          throw new Error(`Missing dependency ${input.meta.qualifiedName} in task ${qualifiedName}`);
         }
         component.dependencies.push(dependency);
         dependency.dependents.push(this);

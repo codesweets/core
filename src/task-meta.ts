@@ -41,7 +41,7 @@ export class TaskMeta extends EventEmitter implements QualifiedName {
 
   public static loaded: TaskMeta[] = [];
 
-  public static loadedByName: Record<string, TaskMeta> = {}
+  public static loadedByQualifiedName: Record<string, TaskMeta> = {}
 
   public readonly module: string;
 
@@ -76,10 +76,11 @@ export class TaskMeta extends EventEmitter implements QualifiedName {
     this.validate = (data) => ajvValidate(data) ? null : ajv.errorsText(ajvValidate.errors);
     this.hidden = init.hidden;
 
+    TaskMeta.loaded.push(this);
+    TaskMeta.loadedByQualifiedName[this.qualifiedName] = this;
+
     const globals: any = global;
     if (globals.ontaskmeta) {
-      TaskMeta.loaded.push(this);
-      TaskMeta.loadedByName[this.typename] = this;
       globals.ontaskmeta(this);
     }
   }
