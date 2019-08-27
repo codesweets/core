@@ -12,7 +12,7 @@ export class JavaScript extends TaskWithData<JavaScriptData> {
     schema: {
       ...require("ts-schema!./javascript.ts?JavaScriptData"),
       additionalProperties: {
-        oneOf: [
+        anyOf: [
           {
             properties: {
               value: {
