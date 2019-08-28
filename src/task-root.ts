@@ -4,6 +4,9 @@ import {TaskWithData} from "./task-with-data";
 
 export interface TaskRootData {
   dryRun?: boolean;
+  hideSatisfiedInputs?: boolean;
+  hideOptionalInputs?: boolean;
+  hideUncommonInputs?: boolean;
 }
 
 export class TaskRoot extends TaskWithData<TaskRootData> {
@@ -15,7 +18,7 @@ export class TaskRoot extends TaskWithData<TaskRootData> {
     typename: "TaskRoot"
   })
 
-  public logger: TaskLog;
+  private logger: TaskLog;
 
   public get logTask (): TaskLog {
     return this.logger || ((task, type, ...args) => console.log(task.meta.typename, type, ...args));

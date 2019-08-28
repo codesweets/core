@@ -1,6 +1,7 @@
 import Ajv from "ajv";
 import {EventEmitter} from "events";
 import {JSONSchema6} from "json-schema";
+import {TaskLog} from "./task";
 
 const ajv = new Ajv({
   unknownFormats: "ignore"
@@ -9,7 +10,7 @@ const ajv = new Ajv({
 type Task = import("./task").Task;
 type TaskData = import("./task").TaskData;
 export interface QualifiedName { module: string; typename: string }
-export type TaskConstructor = (new (owner: Task, data: TaskData) => Task) & { meta: TaskMeta }
+export type TaskConstructor = (new (owner: Task, data: TaskData, logger: TaskLog) => Task) & { meta: TaskMeta }
 
 export interface TaskMetaInit {
   typename: string;

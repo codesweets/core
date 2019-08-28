@@ -50,8 +50,9 @@ export class Task extends EventEmitter {
     return this.root.data.dryRun;
   }
 
-  public constructor (owner: Task, data: TaskData = {}) {
+  public constructor (owner: Task, data: TaskData = {}, logger?: TaskLog) {
     super();
+    (this as any).logger = logger;
 
     this.root = owner ? owner.root : this as Task as TaskRoot;
     this.rawData = data;
@@ -88,15 +89,15 @@ export class Task extends EventEmitter {
     };
   }
 
-  public static deserialize (object: TaskSaved, owner: Task = null): Task {
+  public static deserialize (object: TaskSaved, logger?: TaskLog, owner?: Task): Task {
     console.log(TaskMeta.loadedByQualifiedName);
     console.log(object);
     try {
       const meta = TaskMeta.loadedByQualifiedName[object.qualifiedName || "TaskRoot - @codesweets/core"];
       // eslint-disable-next-line new-cap
-      const task = new meta.construct(owner, object[object.qualifiedName] as TaskData);
+      const task = new meta.construct(owner, object[object.qualifiedName] as TaskData, logger);
       if (object.components) {
-        object.components.forEach((saved) => Task.deserialize(saved, task));
+        object.components.forEach((saved) => Task.deserialize(saved, logger, task));
       }
       return task;
     } catch (err) {
