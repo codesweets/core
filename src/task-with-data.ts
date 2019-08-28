@@ -1,4 +1,4 @@
-import {Task, TaskData} from "./task";
+import {Task, TaskData, TaskLog} from "./task";
 
 export class TaskWithData<T extends TaskData = TaskData> extends Task {
   public get data (): T {
@@ -6,7 +6,7 @@ export class TaskWithData<T extends TaskData = TaskData> extends Task {
   }
 
   // eslint-disable-next-line no-useless-constructor
-  public constructor (owner: Task, data: T) {
-    super(owner, data);
+  public constructor (owner: Task, data: T, logger: TaskLog) {
+    super(owner, data, logger);
   }
 }

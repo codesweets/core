@@ -56,7 +56,7 @@ export class Task extends EventEmitter {
     return this.root.data.dryRun;
   }
 
-  public constructor (owner: Task, data: TaskData = {}, logger?: TaskLog) {
+  public constructor (owner: Task, data: TaskData = {}, logger: TaskLog) {
     super();
     this.logger = logger;
 

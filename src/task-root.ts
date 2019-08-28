@@ -1,4 +1,4 @@
-import {Task, TaskLog} from "./task";
+import {Task} from "./task";
 import {TaskMeta} from "./task-meta";
 import {TaskWithData} from "./task-with-data";
 
@@ -20,7 +20,7 @@ export class TaskRoot extends TaskWithData<TaskRootData> {
 
   public static async create (): Promise<TaskRoot> {
     // We are reserving this API to be async in case we need it.
-    return new TaskRoot(null, {dryRun: false});
+    return new TaskRoot(null, {dryRun: false}, null);
   }
 
   public async run () {

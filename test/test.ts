@@ -5,10 +5,10 @@ import fs from "fs";
 
 (async () => {
   const root = await TaskRoot.create();
-  new Task(root);
+  new Task(root, {}, null);
   new JavaScript(root, {
     script: "require('fs').writeFileSync('/test1.txt', 'hello1')"
-  });
+  }, null);
   await root.run();
 
   const taskSaved1: TaskSaved = {
