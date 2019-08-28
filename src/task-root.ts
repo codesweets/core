@@ -18,6 +18,8 @@ export class TaskRoot extends TaskWithData<TaskRootData> {
     typename: "TaskRoot"
   })
 
+  public idCounter = 0;
+
   public static async create (): Promise<TaskRoot> {
     // We are reserving this API to be async in case we need it.
     return new TaskRoot(null, {dryRun: false}, null);

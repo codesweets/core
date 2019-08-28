@@ -61,6 +61,7 @@ export class Task extends EventEmitter {
     this.logger = logger;
 
     this.root = owner ? owner.root : this as Task as TaskRoot;
+    this.id = this.root.idCounter++;
     this.rawData = data;
     this.owner = owner;
     this.ownerIndex = owner ? owner.components.length : -1;
@@ -207,9 +208,7 @@ export class Task extends EventEmitter {
   }
 
   private async initialize () {
-    let idCounter = 0;
     await this.walk("initialize", async (component) => {
-      component.id = idCounter++;
       const {inputs, qualifiedName} = component.meta;
 
       for (const input of inputs) {
