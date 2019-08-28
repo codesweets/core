@@ -18,12 +18,6 @@ export class TaskRoot extends TaskWithData<TaskRootData> {
     typename: "TaskRoot"
   })
 
-  private logger: TaskLog;
-
-  public get logTask (): TaskLog {
-    return this.logger || ((task, type, ...args) => console.log(task.meta.typename, type, ...args));
-  }
-
   public static async create (): Promise<TaskRoot> {
     // We are reserving this API to be async in case we need it.
     return new TaskRoot(null, {dryRun: false});

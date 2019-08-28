@@ -42,8 +42,14 @@ export class Task extends EventEmitter {
 
   private phase: "constructed" | "initialized" = "constructed";
 
+  private logger: TaskLog;
+
+  public get logTask (): TaskLog {
+    return this.logger || ((task, type, ...args) => console.log(task.meta.typename, type, ...args));
+  }
+
   public get log (): TaskLogger {
-    return (type, ...args) => this.root.logTask(this, type, ...args);
+    return (type, ...args) => this.logTask(this, type, ...args);
   }
 
   public get dryRun (): boolean {
@@ -52,7 +58,7 @@ export class Task extends EventEmitter {
 
   public constructor (owner: Task, data: TaskData = {}, logger?: TaskLog) {
     super();
-    (this as any).logger = logger;
+    this.logger = logger;
 
     this.root = owner ? owner.root : this as Task as TaskRoot;
     this.rawData = data;
