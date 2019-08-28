@@ -8,7 +8,7 @@ export interface TaskRootData {
 
 export class TaskRoot extends TaskWithData<TaskRootData> {
   public static meta: TaskMeta = new TaskMeta({
-    construct: TaskRoot as any,
+    construct: TaskRoot,
     hidden: true,
     outputs: [Task],
     schema: require("ts-schema!./task-root.ts?TaskRootData"),

@@ -63,7 +63,8 @@ export class Task extends EventEmitter {
     // Perform all validation first before we do any side effects on other tasks.
     const errors = this.meta.validate(data);
     if (errors) {
-      throw new Error(errors);
+      this.log("error", errors);
+      throw new Error("abort");
     }
 
     if (owner) {
@@ -90,13 +91,20 @@ export class Task extends EventEmitter {
   public static deserialize (object: TaskSaved, owner: Task = null): Task {
     console.log(TaskMeta.loadedByQualifiedName);
     console.log(object);
-    const meta = TaskMeta.loadedByQualifiedName[object.qualifiedName || "TaskRoot - @codesweets/core"];
-    // eslint-disable-next-line new-cap
-    const task = new meta.construct(owner, object[object.qualifiedName] as TaskData);
-    if (object.components) {
-      object.components.forEach((saved) => Task.deserialize(saved, task));
+    try {
+      const meta = TaskMeta.loadedByQualifiedName[object.qualifiedName || "TaskRoot - @codesweets/core"];
+      // eslint-disable-next-line new-cap
+      const task = new meta.construct(owner, object[object.qualifiedName] as TaskData);
+      if (object.components) {
+        object.components.forEach((saved) => Task.deserialize(saved, task));
+      }
+      return task;
+    } catch (err) {
+      if (err.message !== "abort") {
+        throw err;
+      }
+      return null;
     }
-    return task;
   }
 
   public serialize (): TaskSaved {
